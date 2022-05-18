@@ -1,6 +1,6 @@
-import imp
 from joblib import load
 from nltk.corpus import stopwords
+import nltk
 
 stopset = list(set(stopwords.words('spanish')))
 
@@ -10,6 +10,7 @@ def load_model():
     global classifier, stopset
     classifier = load('sentiment_model.joblib')
     stopset = list(set(stopwords.words('spanish')))
+    nltk.download('stopwords')
 
 def preprocess(text):
     return dict([(word, True) for word in text.split() if word not in stopset])
