@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
-from fuzzy import simulate
+from fuzzy import simulate, load_fuzzy_controller
+from sentiment import classify, load_model
 from operator import itemgetter
 from random import choice
 
@@ -19,9 +20,13 @@ def check_ticket_advise():
 @app.route("/sentiment", methods=['POST'])
 def check_sentiment():
     content = request.json['text']
-    print(content)
-    return jsonify({ 'sentiment': choice(['positivo', 'negativo']) })
+    sentiment = classify(content)
+    return jsonify({ 'sentiment': sentiment })
 
 
 if __name__ == "__main__":
+    print('Loading fuzzy controller')
+    load_fuzzy_controller()
+    print('Loading sentiment analisys model')
+    load_model()
     app.run(host='0.0.0.0')
