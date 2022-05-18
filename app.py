@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Flask, request, jsonify
 from fuzzy import simulate
 from operator import itemgetter
